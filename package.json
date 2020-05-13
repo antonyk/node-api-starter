@@ -1,0 +1,25 @@
+{
+  "name": "node-api-boilerplate",
+  "version": "1.0.0",
+  "description": "1. structure\r  2. dependencies\r  3. boilerplate code",
+  "main": "index.js",
+  "module": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonyk/node-api-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "Anthony K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonyk/node-api-boilerplate/issues"
+  },
+  "homepage": "https://github.com/antonyk/node-api-boilerplate#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25"
+  }
+}
