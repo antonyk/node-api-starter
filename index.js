@@ -8,7 +8,7 @@ const http = require('http');
 const http_port = process.env.HTTP_PORT || 4000;
 
 // app-specific modules and libs
-const server = require("./server.js");
+const server = require("./app/server");
 
 // config app
 http.createServer(server).listen(http_port, () => {
@@ -26,3 +26,4 @@ http.createServer(server).listen(http_port, () => {
 //   .listen(https_port, () => {
 //     console.log(`\n== [secure] App running on port ${https_port} ==\n`);
 //   });
+

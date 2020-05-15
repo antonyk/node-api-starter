@@ -13,4 +13,9 @@ app.get('/', (req, res) => {
   res.send('server is running');
 })
 
+// additional route handling
+const apiRouter = require('./api/apiRouter')
+app.use('/api', apiRouter);
+
+
 module.exports = app;
