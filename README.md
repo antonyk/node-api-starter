@@ -14,3 +14,5 @@
 5. enable nodemon
 6. set up folder structure and routers for root -> app -> api
 7. placeholder routers for two generic entities (users, products)
+8. data access layer: knex, sqlite3, pg, ... (install dependencies)
+
