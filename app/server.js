@@ -1,11 +1,17 @@
-const express = require("express");
+module.exports = {
+  httpStart,
+  httpsStart
+}
 
-// create a new express app instance
-const app = express();
-// config express with json middleware
-app.use(express.json());
-// config express with cors
+const express = require("express");
+const helmet = require('helmet')
 const cors = require('cors');
+
+const apiRouter = require('./api/apiRouter')
+
+const app = express();
+app.use(express.json());
+app.use(helmet());
 app.use(cors());
 
 // basic hello world response to root path showing server is running
@@ -14,13 +20,7 @@ app.get('/', (req, res) => {
 })
 
 // additional route handling
-const apiRouter = require('./api/apiRouter')
 app.use('/api', apiRouter);
-
-
-// web server
-
-// config app
 
 function httpStart() {
   const http = require('http');
@@ -30,7 +30,6 @@ function httpStart() {
     console.log(`\n== App running on port ${http_port} ==\n`);
   });
 }
-
 
 // uncomment code below and 'npm i fs' for HTTPS
 function httpsStart() {
@@ -46,9 +45,3 @@ function httpsStart() {
     });
 }
 
-
-
-module.exports = {
-  httpStart,
-  httpsStart
-}
