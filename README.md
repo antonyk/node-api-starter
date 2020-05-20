@@ -15,4 +15,15 @@
 6. set up folder structure and routers for root -> app -> api
 7. placeholder routers for two generic entities (users, products)
 8. data access layer: knex, sqlite3, pg, ... (install dependencies)
+9. moved all http server code into server.js and cleaned up index to only launch the app.
+
+
+## Rerefences
+
+#### Cascading Referential Integrity Constraints
+- used with foreign keys
+  - NO ACTION - prevent delete/update; raise error (equivalent to RESTRICT on some db's)
+  - CASCADE - cascade action down to dependencies
+  - SET NULL - set dependent columns to null; column must be nullable for this to work
+  - SET DEFAULT - set value to its default or null (assuming column is nullable) if no default defined for column
 
