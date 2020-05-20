@@ -9,6 +9,7 @@ const cors = require('cors');
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
+const { HTTP_PORT, HTTPS_PORT } = require('../vars');
 const dbConfig = require('../data/dbConfig')
 const apiRouter = require('./api/apiRouter')
 
@@ -41,10 +42,9 @@ app.use('/api', apiRouter)
 
 function httpStart() {
   const http = require('http')
-  const http_port = process.env.HTTP_PORT || 4000
 
-  return http.createServer(app).listen(http_port, () => {
-    console.log(`\n== App running on port ${http_port} ==\n`)
+  return http.createServer(app).listen(HTTP_PORT, () => {
+    console.log(`\n== App running on port ${HTTP_PORT} ==\n`)
   })
 }
 
@@ -52,13 +52,12 @@ function httpStart() {
 function httpsStart() {
   const https = require('https')
   const fs = require('fs')
-  const https_port = process.env.HTTPS_PORT || 4001
 
   return https.createServer({
       key: fs.readFileSync('server.key'), 
       cert: fs.readFileSync('server.cert') 
-    }, app).listen(https_port, () => {
-      console.log(`\n== [secure] App running on port ${https_port} ==\n`)
+    }, app).listen(HTTPS_PORT, () => {
+      console.log(`\n== [secure] App running on port ${HTTPS_PORT} ==\n`)
     })
 }
 

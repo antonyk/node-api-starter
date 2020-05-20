@@ -17,6 +17,8 @@
 8.  data access layer: knex, sqlite3, pg, ... (install dependencies)
 9.  moved all http server code into server.js and cleaned up index to only launch the app.
 10. enable persistent sessions using express-session and connect-session-knex
+11. vars file
+
 
 
 ## Rerefences
