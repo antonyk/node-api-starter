@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/antonyk/node-api-boilerplate#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-session-knex": "^1.6.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -28,6 +29,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
     "pg": "^8.2.0",
     "sqlite3": "^4.2.0"

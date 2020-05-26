@@ -16,8 +16,10 @@ const vars = {
 
   BCRYPT_ROUNDS: process.env.BCRYPT_ROUNDS || 2,
 
+  JWT_SECRET: process.env.JWT_SECRET,
 
   // 2. CONSTANTS
+
 
 }
 
