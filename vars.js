@@ -3,9 +3,10 @@ const vars = {
 
   // 1. ENV vars
   APP_ENV: process.env.APP_ENV, // if development, will console log some extra stuff
-  HTTP_PORT: process.env.HTTP_PORT,
-  HTTPS_PORT: process.env.HTTPS_PORT,
+  HTTP_PORT: process.env.HTTP_PORT || this.PORT,
+  HTTPS_PORT: process.env.HTTPS_PORT || this.PORT,
   NODE_ENV: process.env.NODE_ENV, // default env var on heroku
+  PORT: process.env.PORT,
 
   // have a connection string per configuration to minimize friction
   DATABASE_URL: process.env.DATABASE_URL || "",
