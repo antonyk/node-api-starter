@@ -1,6 +1,16 @@
-const knex = require('knex');
-const knexfile = require('../knexfile');
+// creates and returns a knex db connection object
+// use this file for other db wrappers or orm connectors
+const knex = require('knex')
+const knexfile = require('../knexfile')
 const { DB_ENV } = require('../vars')
-const db = knex(knexfile[DB_ENV]);
+const knexDbConnection = knex(knexfile[DB_ENV])
 
-module.exports = db;
+const db = {
+  knex: knexDbConnection
+}
+
+function getConnection(connection = "knex") {
+  return db[connection]
+}
+
+module.exports = getConnection

@@ -10,7 +10,7 @@ const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
 const { HTTP_PORT, HTTPS_PORT } = require('../vars');
-const dbConfig = require('../data/dbConfig')
+const dbConfig = require('../data/dbConfig')("knex")
 const apiRouter = require('./api/apiRouter')
 
 const app = express()

@@ -1,5 +1,7 @@
-const elephantPostgres = '';
-const herokuPostgres = '';
+// connection strings
+const { STAGING_CONN_STR, PRODUCTION_CONN_STR} = require('./vars')
+const elephantPostgres = ''
+const herokuPostgres = ''
 
 const defaultConfig = {
   migrations: {
@@ -8,6 +10,10 @@ const defaultConfig = {
   },
   seeds: {
     directory: './data/seeds',
+  },
+  pool: {
+    min: 2,
+    max: 3,
   },
 }
 
@@ -18,32 +24,25 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true, // needed for sqlite
     connection: {
-      filename: './data/boilerplate.db3',
+      filename: './data/sqlite3.db3',
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done)
+      }
     },
   },
 
   staging: {
     ...defaultConfig,
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password',
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
+    client: 'pg',
+    connection: STAGING_CONN_STR,
   },
 
   production: {
     ...defaultConfig,
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
+    client: 'pg',
+    connection: PRODUCTION_CONN_STR,
     pool: {
       min: 2,
       max: 10

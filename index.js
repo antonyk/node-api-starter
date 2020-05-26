@@ -8,3 +8,11 @@ require('dotenv').config(/* add your dotenv options here */);
 const server = require("./app/server");
 server.httpStart()
 // server.httpsStart() // for https
+
+
+console.log("vars:", require('./vars'))
+
+// if (require('./vars')["APP_ENV"] === "development") {
+//   console.log("vars:", require('./vars'))
+// }
+
