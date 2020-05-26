@@ -1,4 +1,5 @@
 const messageDictionary = {
+  // Schema Validation Errors
   notAcceptableValue: {
     message: "The passed parameter value is not acceptable",
     code: 400,
@@ -7,6 +8,11 @@ const messageDictionary = {
     message: "ID parameter is not valid",
     code: 400,
   },
+  incompleteData: {
+    message: "Please provide the required data",
+    code: 400,
+  },
+  // No Result Errors
   userIdNotFound: {
     message: "User with this ID not found",
     code: 404,
@@ -15,10 +21,7 @@ const messageDictionary = {
     message: "Object not found",
     code: 404,
   },
-  incompleteData: {
-    message: "Please provide the required data",
-    code: 400,
-  },
+  // Database Errors
   dbCreateError: {
     message: "There was an error while trying to Save to DB",
     code: 500,
@@ -34,6 +37,20 @@ const messageDictionary = {
   dbDeleteError: {
     message: "There was an error while trying to Delete record from DB",
     code: 500,
+  },
+  // Authentication Errors
+  invalidToken: {
+    message: "Invalid token",
+    code: 401,
+  },
+  notAuthenticated: {
+    message: "You must first authenticate yourself",
+    code: 401,
+  },
+  // "Not Implemented" Errors
+  notImplemented: {
+    message: "Not yet implemented",
+    code: 501,
   },
 }
 

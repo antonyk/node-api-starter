@@ -1,13 +1,20 @@
 const router = require('express').Router()
+module.exports = router
 
-router.post("/register", (req, res) => {
+const messages = require('../../middleware/messages').messageDictionary
 
-  res.status(501).json({message: "not implemented"})
+router.post("/register", (req, res, next) => {
+
+  next(messages.notImplemented)
 
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
 
-  res.status(501).json({message: "not implemented"})
+  next(messages.notImplemented)
 
+})
+
+router.get("/", (req, res, next) => {
+  next(messages.notImplemented)
 })

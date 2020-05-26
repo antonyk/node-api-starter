@@ -12,6 +12,7 @@ const KnexSessionStore = require('connect-session-knex')(session)
 const { HTTP_PORT, HTTPS_PORT } = require('../vars');
 const dbConfig = require('../data/dbConfig')("knex")
 const apiRouter = require('./api/apiRouter')
+const authRouter = require('./auth/authRouter')
 const logger = require('../middleware/logger')
 const { errorHandler } = require('../middleware/messages')
 
@@ -42,7 +43,7 @@ app.get('/', (req, res) => {
 
 // additional route handling
 app.use('/api', apiRouter)
-
+app.use('/api/auth', authRouter)
 
 // final, catch-all middleware
 app.use(errorHandler)
