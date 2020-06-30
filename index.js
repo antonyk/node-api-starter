@@ -2,10 +2,10 @@
 // eslint-disable-next-line no-global-assign
 require = require("esm")(module/* , options */)
 module.exports = require("./main.js")
-require('dotenv').config(/* add your dotenv options here */);
+require('dotenv').config(/* add your dotenv options here */)
 
 // app-specific imports
-const server = require("./app/server");
+const server = require("./app/server")
 server.httpStart()
 // server.httpsStart() // for https
 
