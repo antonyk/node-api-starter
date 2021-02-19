@@ -1,5 +1,5 @@
 // ESM syntax is supported.
-import vars from './vars' // required for dotenv to work; ensures that .env vars are loaded
+import vars from './utils/vars' // required for dotenv to work; ensures that .env vars are loaded
 import server from './app/server'
 
 // for debugging
