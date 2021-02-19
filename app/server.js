@@ -1,10 +1,5 @@
 import vars from '../utils/vars'
 
-module.exports = {
-  httpStart,
-  httpsStart,
-}
-
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
@@ -78,4 +73,9 @@ function httpsStart() {
     .listen(HTTPS_PORT, () => {
       console.log(`\n== [secure] App running on port ${HTTPS_PORT} ==\n`)
     })
+}
+
+export default {
+  httpStart,
+  httpsStart,
 }
