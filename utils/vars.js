@@ -1,44 +1,83 @@
-// vars.js -- Single name repository for config vars
+// vars.js
 import dotenv from 'dotenv'
 
-// dotenv.config({ silent: true })
-dotenv.config(/* add your dotenv options here */)
+/*
+todo: implement the following syntax:
+- vars.env[key] - return current value in process.env or default if undefined
+- vars.app[key] - return only from a global static vars dict not stored
+in env (that may eventually be a config presisted in db or local storage)
+*/
 
+// dotenv.config({ silent: true })
+const env = dotenv.config(/* add your dotenv options here */)
+const isDevMode = env.parsed['NODE_ENV'] === 'development' // look into replacing with a CLI parameter
+if (isDevMode) console.log(env.parsed)
+
+// this object acts as a schema for all possible global vars
 const defaultVars = {
-  APP_ENV: process.env.APP_ENV || 'production', // if development, will console log some extra stuff
-  HTTP_PORT: process.env.HTTP_PORT || process.env.PORT || 5000,
-  HTTPS_PORT: process.env.HTTPS_PORT || process.env.PORT || 5001,
-  NODE_ENV: process.env.NODE_ENV, // default env var on heroku
-  PORT: process.env.PORT,
+  NODE_ENV: 'production', // default env var on heroku
+  APP_ENV: 'production', // if development, will console log some extra stuff
+  PORT: 80,
+  HTTP_PORT: 80,
+  HTTPS_PORT: 443,
 
   // have a connection string per configuration to minimize friction
-  DATABASE_URL: process.env.DATABASE_URL || '',
-  STAGING_CONN_STR: process.env.STAGING_CONN_STR || process.env.DATABASE_URL, // better to throw than connect to the wrong db
-  PRODUCTION_CONN_STR:
-    process.env.PRODUCTION_CONN_STR || process.env.DATABASE_URL,
-  DB_ENV: process.env.DB_ENV || 'production',
-  BCRYPT_ROUNDS: process.env.BCRYPT_ROUNDS || 2,
-  JWT_SECRET: process.env.JWT_SECRET,
+  DB_ENV: 'production',
+  DATABASE_URL: '',
+  DB_CONN_STR: '', // better to throw than connect to the wrong db
+  STAGING_CONN_STR: '', // better to throw than connect to the wrong db
+  PRODUCTION_CONN_STR: '',
+  ELEPHANT_URL: '',
+  HEROKU_URL: '',
+
+  BCRYPT_ROUNDS: 6,
+  JWT_SECRET: null,
 }
 
-// defaults could be based on the environment (prod vs dev)?
-const get = (key, useDefaults = true) => {
-  const result = process.env[key]
+class Vars {
+  static dict = {}
+  static reloadOnGet = false //
+  static getConfigObject = () => {}
 
-  if (result === undefined && useDefaults) {
-    return defaultVars[key]
+  static init(reloadOnGet, configObjectCallback) {
+    this.reloadOnGet = reloadOnGet
+    this.getConfigObject = configObjectCallback
+    this.dict = {
+      ...defaultVars,
+    }
+    this.reload()
   }
 
-  return result
+  static load(configObj = null) {
+    const processEnvironmentVars = {}
+    Object.keys(defaultVars).forEach((key) => {
+      if (process.env[key] !== undefined)
+        processEnvironmentVars[key] = process.env[key]
+    })
+
+    this.dict = {
+      ...processEnvironmentVars,
+      ...configObj,
+    }
+  }
+
+  static reload() {
+    const configObj = this.getConfigObject()
+    this.load(configObj)
+  }
+
+  static get current() {
+    // allows for hot reloading of .env file changes
+    if (this.reloadOnGet) {
+      this.reload()
+    }
+    return this.dict
+  }
+
+  static get env() {
+    return process.env
+  }
 }
 
-const all = () => {
-  const result = {}
-  Object.keys(defaultVars).forEach((key) => (result[key] = process.env[key]))
-  return result
-}
-
-export default {
-  get,
-  all,
-}
+const vars = Vars
+vars.init(isDevMode, () => dotenv.config().parsed)

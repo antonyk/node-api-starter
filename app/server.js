@@ -6,8 +6,8 @@ const cors = require('cors')
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
-const HTTP_PORT = vars.get('HTTP_PORT')
-const HTTPS_PORT = vars.get('HTTPS_PORT')
+const HTTP_PORT = vars.current['HTTP_PORT']
+const HTTPS_PORT = vars.current['HTTPS_PORT']
 
 const dbConfig = require('../data/dbConfig')('knex')
 const apiRouter = require('./api/apiRouter')

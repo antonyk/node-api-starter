@@ -4,7 +4,7 @@ import vars from '../utils/vars'
 
 const knex = require('knex')
 const knexfile = require('../knexfile')
-const knexDbConnection = knex(knexfile[vars.get('DB_ENV')])
+const knexDbConnection = knex(knexfile[vars.current['DB_ENV']])
 
 const db = {
   knex: knexDbConnection,

@@ -36,13 +36,13 @@ module.exports = {
   staging: {
     ...defaultConfig,
     client: 'pg',
-    connection: vars.get('STAGING_CONN_STR'),
+    connection: vars.current['STAGING_CONN_STR'],
   },
 
   production: {
     ...defaultConfig,
     client: 'pg',
-    connection: vars.get('PRODUCTION_CONN_STR'),
+    connection: vars.current['PRODUCTION_CONN_STR'],
     pool: {
       min: 2,
       max: 10,

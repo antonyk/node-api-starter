@@ -3,8 +3,8 @@ import vars from './utils/vars' // required for dotenv to work; ensures that .en
 import server from './app/server'
 
 // for debugging
-if (vars.get('APP_ENV') === 'development') {
-  console.log('vars:', vars.all())
+if (vars.current['APP_ENV'] === 'development') {
+  console.log('vars:', vars.current)
 }
 
 server.httpStart()
