@@ -1,5 +1,6 @@
 // connection strings
-const { STAGING_CONN_STR, PRODUCTION_CONN_STR} = require('./vars')
+import vars from './utils/vars'
+
 const elephantPostgres = ''
 const herokuPostgres = ''
 
@@ -18,7 +19,6 @@ const defaultConfig = {
 }
 
 module.exports = {
-
   development: {
     ...defaultConfig,
     client: 'sqlite3',
@@ -28,25 +28,24 @@ module.exports = {
     },
     pool: {
       afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done)
-      }
+        conn.run('PRAGMA foreign_keys = ON', done)
+      },
     },
   },
 
   staging: {
     ...defaultConfig,
     client: 'pg',
-    connection: STAGING_CONN_STR,
+    connection: vars.current['STAGING_CONN_STR'],
   },
 
   production: {
     ...defaultConfig,
     client: 'pg',
-    connection: PRODUCTION_CONN_STR,
+    connection: vars.current['PRODUCTION_CONN_STR'],
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
-
 }

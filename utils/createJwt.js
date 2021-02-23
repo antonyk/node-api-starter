@@ -1,19 +1,21 @@
+import vars from '../utils/vars'
+
 const jwt = require('jsonwebtoken')
 
-const { JWT_SECRET } = require('../vars')
-
-module.exports = createToken
-
 function createToken(payload) {
-
   const options = {
-    expiresIn: '1d'
+    expiresIn: '1d',
   }
 
-  return jwt.sign({
-    sub: "", 
-    username: "", 
-    ...payload
-  }, JWT_SECRET, options)
-
+  return jwt.sign(
+    {
+      sub: '',
+      username: '',
+      ...payload,
+    },
+    vars.current['JWT_SECRET'],
+    options
+  )
 }
+
+module.exports = createToken
