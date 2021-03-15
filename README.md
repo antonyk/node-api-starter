@@ -1,5 +1,8 @@
 # node-api-boilerplate
 
+## TODO
+- look into using Gasket
+
 ## steps
  1. structure
  2. dependencies
