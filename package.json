@@ -5,6 +5,8 @@
   "main": "index.js",
   "module": "main.js",
   "scripts": {
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix .",
     "start": "node index.js",
     "server": "nodemon index.js",
     "test": "cross-env DB_ENV=development jest --watch --runInBand"
@@ -35,9 +37,12 @@
     "sqlite3": "^4.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "jest": "^26.0.1",
-    "supertest": "^4.0.2",
-    "cross-env": "^7.0.2"
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
   }
 }
