@@ -1,10 +1,18 @@
 {
-  "extends": [
-    "airbnb-base"
-    //  "prettier"
-  ],
-  // "plugins": ["prettier"],
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "plugins": ["import"],
+  "extends": ["airbnb-base", "prettier"],
   "rules": {
-    // "prettier/prettier": ["warn"],
+    "no-use-before-define": "warn",
+    "no-unused-vars": "warn",
+    "no-undef": "warn",
+    // "global-require": "warn",
+    "dot-notation": "warn",
+    "prefer-destructuring": "warn",
+
+    "import/no-useless-path-segments": "warn"
   }
 }
