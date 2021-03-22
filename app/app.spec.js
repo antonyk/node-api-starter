@@ -1,18 +1,16 @@
-const supertest = require('supertest')
-const server = require('../index')
-
+const supertest = require('supertest');
+const server = require('../index');
 
 // auth
-describe("app", () => {
+describe('app', () => {
+  const uname = `u${Math.random()}`;
+  const pass = 'I am secret';
 
-  const uname = `u${Math.random()}`
-  const pass = "I am secret"
+  it('can run tests', () => {
+    expect(true).toBeTruthy();
+  });
 
-  it("can run tests", () => {
-    expect(true).toBeTruthy()
-  })
-
-  describe("/auth/register", () => {
+  describe('/auth/register', () => {
     // it("returns error when invalid data provided", () => {
     //   return supertest(server)
     //     .post("/api/auth/register")
@@ -22,22 +20,14 @@ describe("app", () => {
     //     })
     // })
 
-    it.todo("returns success when good data provided")
+    it.todo('returns success when good data provided');
 
-    it.todo("returns error when trying a duplicate username")
+    it.todo('returns error when trying a duplicate username');
+  });
 
-  })
-
-  describe("/auth/login", () => {
-    it.todo("")
-  })
-
-
-
-
-
-
-
-})
+  describe('/auth/login', () => {
+    it.todo('');
+  });
+});
 
 // app

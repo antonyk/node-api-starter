@@ -1,11 +1,11 @@
-import vars from '../utils/vars'
+import vars from '../utils/vars';
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 function createToken(payload) {
   const options = {
     expiresIn: '1d',
-  }
+  };
 
   return jwt.sign(
     {
@@ -14,8 +14,8 @@ function createToken(payload) {
       ...payload,
     },
     vars.current['JWT_SECRET'],
-    options
-  )
+    options,
+  );
 }
 
-module.exports = createToken
+module.exports = createToken;
