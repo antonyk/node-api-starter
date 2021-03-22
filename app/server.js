@@ -1,25 +1,34 @@
-import vars from '../utils/vars'
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import session from 'express-session';
+import connectSessionKnex from 'connect-session-knex';
+import http from 'http';
+import https from 'https';
+import fs from 'fs';
 
-const express = require('express')
-const helmet = require('helmet')
-const cors = require('cors')
-const session = require('express-session')
-const KnexSessionStore = require('connect-session-knex')(session)
+import vars from '../utils/vars';
 
-const HTTP_PORT = vars.current['HTTP_PORT']
-const HTTPS_PORT = vars.current['HTTPS_PORT']
+// const helmet = require('helmet')
+// const cors = require('cors')
+// const session = require('express-session')
+const KnexSessionStore = connectSessionKnex(session);
 
-const dbConfig = require('../data/dbConfig')('knex')
-const apiRouter = require('./api/apiRouter')
-const authRouter = require('./auth/authRouter')
-const logger = require('../middleware/logger')
-const { errorHandler } = require('../middleware/messages')
+const { HTTP_PORT } = vars.current;
+const { HTTPS_PORT } = vars.current;
+const { NODE_ENV } = vars.current;
 
-const app = express()
-app.use(helmet())
-app.use(logger)
-app.use(cors())
-app.use(express.json())
+const dbConfig = require('../data/dbConfig')('knex');
+const apiRouter = require('./api/apiRouter');
+const authRouter = require('./auth/authRouter');
+const logger = require('../middleware/logger');
+const { errorHandler } = require('../middleware/messages');
+
+const app = express();
+app.use(helmet());
+app.use(logger);
+app.use(cors());
+app.use(express.json());
 app.use(
   session({
     resave: false, // set to false to avoid recreating sessions that have not changed
@@ -34,48 +43,46 @@ app.use(
       knex: dbConfig,
       createtable: true, //
     }),
-  })
-)
+  }),
+);
 
 // basic hello world response to root path showing server is running
 app.get('/', (req, res) => {
-  res.send('server is running')
-})
+  res.send('server is running');
+});
 
 // additional route handling
-app.use('/api', apiRouter)
-app.use('/api/auth', authRouter)
+app.use('/api', apiRouter);
+app.use('/api/auth', authRouter);
 
 // final, catch-all middleware
-app.use(errorHandler)
+app.use(errorHandler);
 
 function httpStart() {
-  const http = require('http')
-
   return http.createServer(app).listen(HTTP_PORT, () => {
-    console.log(`\n== App running on port ${HTTP_PORT} ==\n`)
-  })
+    if (NODE_ENV === 'development')
+      console.log(`\n== App running on port ${HTTP_PORT} ==\n`);
+  });
 }
 
 // uncomment code below and 'npm i fs' for HTTPS
+// todo: improve this https implementation; normally don't need cert from file
 function httpsStart() {
-  const https = require('https')
-  const fs = require('fs')
-
   return https
     .createServer(
       {
         key: fs.readFileSync('server.key'),
         cert: fs.readFileSync('server.cert'),
       },
-      app
+      app,
     )
     .listen(HTTPS_PORT, () => {
-      console.log(`\n== [secure] App running on port ${HTTPS_PORT} ==\n`)
-    })
+      if (NODE_ENV === 'development')
+        console.log(`\n== [secure] App running on port ${HTTPS_PORT} ==\n`);
+    });
 }
 
 export default {
   httpStart,
   httpsStart,
-}
+};

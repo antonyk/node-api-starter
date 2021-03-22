@@ -1,23 +1,23 @@
-import vars from '../utils/vars'
+import vars from '../utils/vars';
 
-const jwt = require('jsonwebtoken')
-const messages = require('./messages').messageDictionary
+const jwt = require('jsonwebtoken');
+const messages = require('./messages').messageDictionary;
 
-module.export = authenticate
+module.export = authenticate;
 
 function authenticate(req, res, next) {
-  const token = req.headers.authorization
+  const token = req.headers.authorization;
 
   if (token) {
     jwt.verify(token, vars.current['JWT_SECRET'], (error, decodedToken) => {
       if (error) {
-        next(messages.invalidToken)
+        next(messages.invalidToken);
       } else {
-        req.jwt = decodedToken
-        next()
+        req.jwt = decodedToken;
+        next();
       }
-    })
+    });
   } else {
-    next(messages.notAuthenticated)
+    next(messages.notAuthenticated);
   }
 }

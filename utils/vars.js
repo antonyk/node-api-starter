@@ -1,5 +1,5 @@
 // vars.js
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
 /*
 todo: implement the following syntax:
@@ -9,9 +9,13 @@ in env (that may eventually be a config presisted in db or local storage)
 */
 
 // dotenv.config({ silent: true })
-const env = dotenv.config(/* add your dotenv options here */)
-const isDevMode = env.parsed['NODE_ENV'] === 'development' // look into replacing with a CLI parameter
-if (isDevMode) console.log(env.parsed)
+const getConfig = () =>
+  dotenv.config(/* add your dotenv options here */).parsed;
+// const env = envLoader(/* add your dotenv options here */)
+const config = getConfig();
+const isDevMode = process.env.NODE_ENV === 'development'; // look into replacing with a CLI parameter
+if (isDevMode) console.log(config);
+// const reloadOnGet = isDevMode // or some other criteria, as part of the Vars object configuration
 
 // this object acts as a schema for all possible global vars
 const defaultVars = {
@@ -32,52 +36,44 @@ const defaultVars = {
 
   BCRYPT_ROUNDS: 6,
   JWT_SECRET: null,
-}
+};
 
 class Vars {
-  static dict = {}
-  static reloadOnGet = false //
-  static getConfigObject = () => {}
-
-  static init(reloadOnGet, configObjectCallback) {
-    this.reloadOnGet = reloadOnGet
-    this.getConfigObject = configObjectCallback
-    this.dict = {
-      ...defaultVars,
-    }
-    this.reload()
-  }
-
-  static load(configObj = null) {
-    const processEnvironmentVars = {}
-    Object.keys(defaultVars).forEach((key) => {
-      if (process.env[key] !== undefined)
-        processEnvironmentVars[key] = process.env[key]
-    })
+  constructor(defaultSchema, reloadOnGet, configLoaderCallback) {
+    this.defaultSchema = defaultSchema;
+    this.reloadOnGet = reloadOnGet;
+    this.getConfigObject = configLoaderCallback;
 
     this.dict = {
-      ...processEnvironmentVars,
-      ...configObj,
-    }
+      ...defaultSchema,
+    };
+
+    this.refresh();
   }
 
-  static reload() {
-    const configObj = this.getConfigObject()
-    this.load(configObj)
+  refresh() {
+    const envConfig = this.getConfigObject();
+    Object.keys(this.defaultSchema).forEach((key) => {
+      if (process.env[key] !== undefined) this.dict[key] = process.env[key];
+    });
+
+    Object.assign(this.dict, envConfig);
   }
 
-  static get current() {
+  get current() {
     // allows for hot reloading of .env file changes
     if (this.reloadOnGet) {
-      this.reload()
+      this.refresh();
     }
-    return this.dict
+    return this.dict;
   }
 
-  static get env() {
-    return process.env
-  }
+  // get env() {
+  //   return process.env
+  // }
 }
 
-const vars = Vars
-vars.init(isDevMode, () => dotenv.config().parsed)
+const vars = new Vars(defaultVars, isDevMode, getConfig);
+
+export default vars;
+// vars.init(isDevMode, () => dotenv.config().parsed)

@@ -1,8 +1,8 @@
 // connection strings
-import vars from './utils/vars'
+import vars from './utils/vars';
 
-const elephantPostgres = ''
-const herokuPostgres = ''
+const elephantPostgres = '';
+const herokuPostgres = '';
 
 const defaultConfig = {
   migrations: {
@@ -16,7 +16,7 @@ const defaultConfig = {
     min: 2,
     max: 3,
   },
-}
+};
 
 module.exports = {
   development: {
@@ -28,7 +28,7 @@ module.exports = {
     },
     pool: {
       afterCreate: (conn, done) => {
-        conn.run('PRAGMA foreign_keys = ON', done)
+        conn.run('PRAGMA foreign_keys = ON', done);
       },
     },
   },
@@ -48,4 +48,4 @@ module.exports = {
       max: 10,
     },
   },
-}
+};
