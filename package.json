@@ -10,9 +10,9 @@
     "lint-fix": "eslint --fix .",
     "pretty": "prettier '**/*.js'",
     "pretty-fix": "prettier --write '**/*.js'",
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "test": "cross-env DB_ENV=development jest --watch --runInBand"
+    "dev": "nodemon index.js",
+    "test": "cross-env DB_ENV=development jest --watch --runInBand",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,9 @@
     "helmet": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.2",
+    "mysql2": "^2.2.5",
     "pg": "^8.2.0",
+    "sequelize": "^6.6.2",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
@@ -52,6 +54,7 @@
     "jest": "^26.0.1",
     "nodemon": "^2.0.3",
     "prettier": "^2.2.1",
+    "sequelize-cli": "^6.2.0",
     "supertest": "^4.0.2"
   }
 }
