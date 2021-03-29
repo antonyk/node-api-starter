@@ -7,7 +7,7 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 
-import vars from '../utils/vars';
+import { vars } from '../config';
 
 // const helmet = require('helmet')
 // const cors = require('cors')

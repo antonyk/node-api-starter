@@ -1,5 +1,5 @@
 // connection strings
-import vars from './utils/vars';
+import { vars } from './config';
 
 const elephantPostgres = '';
 const herokuPostgres = '';
