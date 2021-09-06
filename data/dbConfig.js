@@ -1,6 +1,6 @@
 // creates and returns a knex db connection object
 // use this file for other db wrappers or orm connectors
-import vars from '../utils/vars';
+import { vars } from '../config';
 
 const knex = require('knex');
 const knexfile = require('../knexfile');

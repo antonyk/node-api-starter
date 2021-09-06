@@ -1,4 +1,4 @@
-import vars from '../utils/vars';
+import { vars } from '../config';
 
 const jwt = require('jsonwebtoken');
 const messages = require('./messages').messageDictionary;
